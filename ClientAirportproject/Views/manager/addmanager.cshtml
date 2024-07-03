@@ -1,0 +1,547 @@
+﻿@model ClientAirportproject.Models.manager_addressclass
+@{
+    ViewBag.Title = "addmanager";
+}
+    <style>
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .e {
+            color: red;
+        }
+        /* red Alert*/
+
+        .blue {
+            padding: 15px;
+            background-color: deepskyblue;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            left: 50%;
+            top: 20%;
+        }
+
+        /*blue color*/
+        .green {
+            padding: 15px;
+            background-color: forestgreen;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 50%;
+            top: 20%;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+    </style>
+    <script>
+        function onStateChange() {
+            var stateDropdown = document.getElementById("stateDropdown");
+            var cityDropdown = document.getElementById("cityDropdown");
+
+            cityDropdown.innerHTML = '<option value="">Select City</option>';
+
+            var selectedState = stateDropdown.value;
+
+            var cities = getCitiesByState(selectedState);
+
+            for (var i = 0; i < cities.length; i++) {
+                var option = document.createElement("option");
+                option.value = cities[i].Value;
+                option.text = cities[i].Text;
+                cityDropdown.add(option);
+            }
+        }
+
+        // Example function to get cities based on the selected state
+        function getCitiesByState(state) {
+            // Implement your logic to get cities based on the selected state
+            // This can be done using AJAX to call a controller action or any other method
+            // For simplicity, I'll provide a hardcoded example
+            switch (state) {
+                case "Telangana":
+                    return [
+                        { Value: "hyderabad", Text: "Hyderabad" },
+                        { Value: "medak", Text: "Medak" },
+                        { Value: "rangareddy", Text: "Rangareddy" },
+                        { Value: "warangal", Text: "Warangal" }
+                    ];
+                case "Andhra Pradesh":
+                    return [
+                        { Value: "amaravati", Text: "Amaravati" },
+                        { Value: "kadapa", Text: "Kadapa" },
+                        { Value: "ongole", Text: "Ongole" },
+                        { Value: "kurnool", Text: "Kurnool" }
+                    ];
+                case "Maharashtra":
+                    return [
+                        { Value: "mumbai", Text: "Mumbai" },
+                        { Value: "pune", Text: "Pune" },
+                        { Value: "nagpur", Text: "Nagpur" },
+                        { Value: "nashik", Text: "Nashik" }
+                    ];
+                case "Karnataka":
+                    return [
+                        { Value: "bangalore", Text: "Bangalore" },
+                        { Value: "mysuru", Text: "Mysuru" },
+                        { Value: "hubli", Text: "Hubli" },
+                        { Value: "mangalore", Text: "Mangalore" }
+                    ];
+                case "Tamil Nadu":
+                    return [
+                        { Value: "chennai", Text: "Chennai" },
+                        { Value: "coimbatore", Text: "Coimbatore" },
+                        { Value: "madurai", Text: "Madurai" },
+                        { Value: "trichy", Text: "Trichy" }
+                    ];
+                case "Gujarat":
+                    return [
+                        { Value: "ahmedabad", Text: "Ahmedabad" },
+                        { Value: "surat", Text: "Surat" },
+                        { Value: "vadodara", Text: "Vadodara" },
+                        { Value: "rajkot", Text: "Rajkot" }
+                    ];
+                case "Rajasthan":
+                    return [
+                        { Value: "jaipur", Text: "Jaipur" },
+                        { Value: "jodhpur", Text: "Jodhpur" },
+                        { Value: "udaipur", Text: "Udaipur" },
+                        { Value: "kota", Text: "Kota" }
+                    ];
+                case "Uttar Pradesh":
+                    return [
+                        { Value: "lucknow", Text: "Lucknow" },
+                        { Value: "kanpur", Text: "Kanpur" },
+                        { Value: "agra", Text: "Agra" },
+                        { Value: "allahabad", Text: "Allahabad" }
+                    ];
+                case "Delhi":
+                    return [
+                        { Value: "newdelhi", Text: "New Delhi" },
+                        { Value: "noida", Text: "Noida" },
+                        { Value: "gurgaon", Text: "Gurgaon" },
+                        { Value: "faridabad", Text: "Faridabad" }
+                    ];
+                case "Kerala":
+                    return [
+                        { Value: "thiruvananthapuram", Text: "Thiruvananthapuram" },
+                        { Value: "kochi", Text: "Kochi" },
+                        { Value: "kozhikode", Text: "Kozhikode" },
+                        { Value: "thrissur", Text: "Thrissur" }
+                    ];
+                case "Punjab":
+                    return [
+                        { Value: "chandigarh", Text: "Chandigarh" },
+                        { Value: "amritsar", Text: "Amritsar" },
+                        { Value: "ludhiana", Text: "Ludhiana" },
+                        { Value: "patiala", Text: "Patiala" }
+                    ];
+                case "Haryana":
+                    return [
+                        { Value: "panchkula", Text: "Panchkula" },
+                        { Value: "ambala", Text: "Ambala" },
+                        { Value: "kurukshetra", Text: "Kurukshetra" },
+                        { Value: "hisar", Text: "Hisar" }
+                    ];
+                case "Assam":
+                    return [
+                        { Value: "guwahati", Text: "Guwahati" },
+                        { Value: "dibrugarh", Text: "Dibrugarh" },
+                        { Value: "jorhat", Text: "Jorhat" },
+                        { Value: "silchar", Text: "Silchar" }
+                    ];
+                // Add more cases for other states
+                default:
+                    return [];
+            }
+        }
+
+    </script>
+    <script>
+    window.onload = function () {
+        if ('@ViewBag.msg'.trim().length !== 0)
+        {
+
+            var greenElement = document.getElementById("green1");
+            greenElement.innerText = '@ViewBag.msg';
+
+            var greenAlertElement = document.getElementById("green");
+            greenAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                greenAlertElement.style.display = 'none';
+            }, 10000);
+        }
+
+        // Check if 'msg1' is not empty
+        if ('@ViewBag.msg1'.trim().length !== 0) {
+
+            var redElement = document.getElementById("red1");
+            redElement.innerText = '@ViewBag.msg1';
+
+            var redAlertElement = document.getElementById("red");
+            redAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                redAlertElement.style.display = 'none';
+            }, 3000);
+        }
+    };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+
+        function onCityBlur() {
+            var city = document.getElementsByClassName("cityTextBox")[0].value;
+            var hno = document.getElementsByClassName("hnoTextBox")[0].value;
+
+
+            $.ajax({
+                url: 'https://ganeshgondyalaserver.azurewebsites.net/api/Address',
+                method: 'GET',
+                data: { Hno: hno, City: city },
+                success: function (data) {
+
+                    var filteredData = data.filter(function (item) {
+                        return item.City === city && item.Hno === hno;
+                    });
+
+                    if (filteredData.length > 0) {
+                        document.getElementById("we1").innerText = "we found matched combo of city and House no vhrck it";
+
+
+                        var alertElement = document.getElementById("myAlert1");
+                        alertElement.style.display = 'block';
+
+                        // Set a timer to hide the alert after 3 seconds
+                        setTimeout(function () {
+                            alertElement.style.display = 'none';
+                        }, 3000)
+
+                        document.getElementById("adrid").value = filteredData[0].AddressId;
+                        document.getElementsByClassName("stateTextBox")[0].value = filteredData[0].state;
+                        document.getElementsByClassName("countryTextBox")[0].value = filteredData[0].Country;
+                        document.getElementsByClassName("pincodeTextBox")[0].value = filteredData[0].pincode;
+                        document.getElementsByClassName("adrlTextBox")[0].value = filteredData[0].Address_line1;
+
+
+                    }
+
+
+                    else {
+                        document.getElementById("blue1").innerText = "Enter all fields no matched city, House No found";
+
+
+                        var alertElement = document.getElementById("blue");
+                        alertElement.style.display = 'block';
+
+                        // Set a timer to hide the alert after 3 seconds
+                        setTimeout(function () {
+                            alertElement.style.display = 'none';
+                        }, 3000);
+                    }
+                },
+                error: function () {
+                    alert("Error fetching data from API1");
+                }
+            });
+
+        }
+
+
+    </script>
+
+   
+    <style>
+        /* Main container style */
+        .container {
+            background-color: #f0f0f0; /* Background color */
+            padding: 20px; /* Padding */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow */
+            width: 90%; /* Adjust width as needed */
+            max-width: 1200px; /* Maximum width */
+            margin: 0 auto; /* Center align */
+            display: flex;
+        
+        }
+
+        /* Table styles */
+        table {
+            width: 100%; /* Full width */
+            margin-bottom: 20px; /* Spacing between tables */
+        }
+
+        /* Input and select styles */
+        input[type="text"],
+        select {
+            width: 100%; /* Full width */
+            padding: 10px; /* Padding */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ccc; /* Border */
+            box-sizing: border-box; /* Box sizing */
+            margin-bottom: 10px; /* Spacing between inputs */
+        }
+
+        /* Submit and reset button styles */
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px; /* Padding */
+            border: none; /* No border */
+            background-color: #4caf50; /* Button color */
+            color: white; /* Text color */
+            cursor: pointer; /* Cursor style */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+            input[type="submit"]:hover,
+            input[type="reset"]:hover {
+                background-color: #45a049; /* Darker button color on hover */
+            }
+    </style>
+
+
+
+<div class="section" style="position: relative; text-align: center;justify-content: center; left: 19%;">
+
+    <h2 style="text-align: center; margin-top: 82px; margin-right:50%">Add Manager</h2>
+    @using (Html.BeginForm())
+    {
+        <div style="display: flex; background-color: white; opacity: 0.9; width: 55%; justify-content: center; box-shadow: 0 0 10px 20px rgb(0 0 0 / 10%); border-radius: 15px; ">
+            <div style="margin-right: 20px; margin-top: 17px;">
+                <table>
+                    <tr>
+                        <th>
+                            Name of Manager
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.mng.Name, new { placeholder = "EX: John Doel" }
+                                                 )
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.Name, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SSN
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.mng.SSN, new { placeholder = "EX: 678901234578" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.SSN, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Date of Birth
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.mng.DOB, new { type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.DOB, null, new { @class = "e" })
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Gender
+                        </th>
+                        <td>
+                            @Html.DropDownListFor(e => e.mng.Gender, new List<SelectListItem>
+                                                                {
+                    new SelectListItem { Text = "Male", Value = "Male" },
+                    new SelectListItem { Text = "Female", Value = "Female" },
+                    new SelectListItem { Text = "Other", Value = "Other" }
+                }, "Select Gender")
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.Gender, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Mobile Number
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.mng.mobile, new { placeholder = "EX: 8901234578" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.mobile, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Email 
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.mng.email, new { placeholder = "EX: mohan123@gmail.com" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.mng.email, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style=" margin-top: 17px;">
+                <table>
+
+
+                    <tr>
+                        <th>
+                            House NO.
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.adrcl.Hno, new { @class = "hnoTextBox", placeholder = "EX: 122-34/g" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.Hno, null, new { @class = "e" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="text" hidden id="adrid" name="adrid" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            State Name
+                        </th>
+                        <td>
+                            @Html.DropDownListFor(e => e.adrcl.state, new SelectList(
+                                                    new List<SelectListItem>
+                                                    {
+                                 new SelectListItem { Value = "", Text = "Select State" },
+                                 new SelectListItem { Value = "Andhra Pradesh", Text = "Andhra Pradesh" },
+
+
+                                  new SelectListItem { Value = "Delhi", Text = "Delhi" },
+
+                                      new SelectListItem { Value = "Gujarat", Text = "Gujarat" },
+                                 new SelectListItem { Value = "Haryana", Text = "Haryana" },
+
+                                 new SelectListItem { Value = "Karnataka", Text = "Karnataka" },
+                                 new SelectListItem { Value = "Kerala", Text = "Kerala" },
+
+                             new SelectListItem { Value = "Maharashtra", Text = "Maharashtra" },
+
+                               new SelectListItem { Value = "Punjab", Text = "Punjab" },
+                                 new SelectListItem { Value = "Rajasthan", Text = "Rajasthan" },
+
+                              new SelectListItem { Value = "Tamil Nadu", Text = "Tamil Nadu" },
+                        new SelectListItem { Value = "Telangana", Text = "Telangana" },
+
+                                new SelectListItem { Value = "Uttar Pradesh", Text = "Uttar Pradesh" },
+
+    }, "Value", "Text"
+                                                        ), new { @class = "stateTextBox", onchange = "onStateChange()", id = "stateDropdown" })
+
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.state, null, new { @class = "e" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            City name
+                        </th>
+                        <td>
+                            @Html.DropDownListFor(e => e.adrcl.City, new SelectList(new List<SelectListItem>(), "Value", "Text"), "Select City", new { @class = "cityTextBox", id = "cityDropdown", onchange = "onCityBlur()", placeholder = "EX: City" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.City, null, new { @class = "e" })
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <th>
+                            address line 1
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.adrcl.Address_line1, new { @class = "adrlTextBox", placeholder = "EX: Raghav colony" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.Address_line1, null, new { @class = "e" })
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <th>
+                            Country name
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.adrcl.Country, new { @class = "countryTextBox", placeholder = "EX: India" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.Country, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Pincode
+                        </th>
+                        <td>
+                            @Html.TextBoxFor(e => e.adrcl.pincode, new { @class = "pincodeTextBox", placeholder = "EX: 502113" })
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(e => e.adrcl.pincode, null, new { @class = "e" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" hidden id="adrid" name="adrid" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 20px; ">
+            <input type="submit" style="margin-right:10px;" />
+            <input type="reset" style="margin-right:300px;" />
+        </div>
+    }
+
+
+    <div class="blue" id="blue" style="display:none;">
+
+        <strong>Oh!</strong>
+        <div id="blue1"></div>
+
+    </div>
+
+
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+    <div class="green" id="green" style="display:none;">
+
+        <strong>SUCCESS!</strong>
+        <div id="green1"></div>
+    </div>
+</div>

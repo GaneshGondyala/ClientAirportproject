@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "three cards";
+}
+
+<h2 id="head">Services</h2>
+
+<style>
+    #head {
+        text-align: center;
+        font-style: italic;
+        font-weight: bolder;
+        margin-top: 75px;
+    }
+
+    .card {
+        height: 2500px;
+        width: 300px;
+    }
+
+    body {
+        background-color: aliceblue;
+    }
+
+    .card-footer {
+        text-align: center;
+    }
+</style>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style=" position: absolute; left: 25%; top: 23%;">
+    <div class="col">
+        <div class="card h-100">
+            <img src="~/images/ass.jpg" class="card-img-top" alt="...">
+            <div class="card-footer" style="background-color: lightblue; margin-top:25px;">
+                <a onclick="window.location.href = '/AddB/AddNewBus';" class="btn btn-primary">Add Bus</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+            <img src="~/images/assignp.jpg"  class="card-img-top" alt="...">
+            <div class="card-footer"  style="background-color:lightblue;margin-top:60px;" >
+                <a onclick="window.location.href = '/AddingR/AddNewRoute';" class="btn btn-primary">Add Route</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-100">
+
+            <img src="~/Models/images/CardA3.jpg" class="card-img-top" alt="...">
+            <div class="card-footer" style="margin-top:106px; background-color:lightblue;">
+                <a onclick="window.location.href = '/AddingS/AddNewSchedule';" class="btn btn-primary">Add Schedule</a>
+            </div>
+        </div>
+    </div>
+
+</div>

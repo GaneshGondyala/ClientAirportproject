@@ -1,0 +1,231 @@
+﻿@model ClientAirportproject.Models.hangerclass
+@{
+    ViewBag.Title = "addhanger";
+}
+<div class="section"  >
+    <h1 style="position:absolute;top:15%;left:46%;">Add Hanger</h1>
+
+    <style>
+
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .e {
+            color: red;
+        }
+
+        .green {
+            padding: 15px;
+            background-color: forestgreen;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        table {
+            position:absolute;
+            top:24%;
+            left:40%;
+            height:250px;
+            width: 400px;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgb(0, 0, 0);
+            margin: 20px 0;
+            background-color:white;
+            opacity:0.7;
+            
+        }
+
+            table tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+            table td {
+                padding: 10px;
+            }
+
+            table input[type="text"],
+            table select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            table input[type="submit"],
+            table input[type="reset"] {
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+
+            table input[type="submit"] {
+                background-color: green;
+                color: white;
+            }
+
+            table input[type="reset"] {
+                background-color: red;
+                color: white;
+            }
+    </style>
+    <script>
+    window.onload = function () {
+        if ('@ViewBag.msg'.trim().length !== 0)
+        {
+
+            var greenElement = document.getElementById("green1");
+            greenElement.innerText = '@ViewBag.msg';
+
+            var greenAlertElement = document.getElementById("green");
+            greenAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                greenAlertElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Check if 'msg1' is not empty
+        if ('@ViewBag.msg1'.trim().length !== 0) {
+
+            var redElement = document.getElementById("red1");
+            redElement.innerText = '@ViewBag.msg1';
+
+            var redAlertElement = document.getElementById("red");
+            redAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                redAlertElement.style.display = 'none';
+            }, 3000);
+        }
+    };
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                url: 'https://ganeshgondyalaserver.azurewebsites.net/api/managerr',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    populateDropdown(data);
+                },
+                error: function (error) {
+                    console.error('Error fetching data from API:', error);
+                }
+            });
+
+
+            function populateDropdown(data) {
+                var dropdown = $('#dropdown');
+
+
+                dropdown.empty();
+
+
+                dropdown.append($('<option>', {
+                    value: '',
+                    text: '-- Select --'
+                }));
+
+                $.each(data, function (index, item) {
+                    //
+                    dropdown.append($('<option>', {
+                        value: item.ManagerId,
+                        text: 'Id: ' + item.ManagerId + ' ' + 'Name: ' + item.Name
+                    }));
+                });
+            }
+        });
+    </script>
+
+    @using (Html.BeginForm())
+    {
+
+        <table cellspacing="10px">
+            <tr>
+                <th>
+                    Hanger location
+                </th>
+                <td>
+                    @Html.TextBoxFor(e => e.Location)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.Location, null, new { @class = "e" })
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Capacity
+                </th>
+                <td>
+                    @Html.TextBoxFor(e => e.Capacity, null, new { @class = "e" })
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.Capacity)
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    Select Manager
+                </th>
+                <td>
+                    @Html.DropDownListFor(e => e.Manager_Id, Enumerable.Empty<SelectListItem>(), new { @id = "dropdown" })
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.Manager_Id, null, new { @class = "e" })
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" />
+                    <input type="reset" />
+                </td>
+            </tr>
+        </table>
+    }
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+    <div class="green" id="green" style="display:none;">
+
+        <strong>SUCCESS!</strong>
+        <div id="green1"></div>
+    </div>
+</div>
+    
+
+

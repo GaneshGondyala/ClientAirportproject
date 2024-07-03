@@ -1,0 +1,433 @@
+﻿@model  ClientAirportproject.Models.planeowndetailsAd
+@{
+    ViewBag.Title = "AddPlaneOwnerAddress";
+}
+<style>
+    .e {
+        color: red;
+    }
+
+    #vs {
+        background-color: blue;
+        color: white;
+    }
+
+    .green {
+        padding: 15px;
+        background-color: forestgreen;
+        color: white;
+        width: 10cm;
+        position: absolute;
+        border-radius: 8px;
+        left: 63%;
+        top: 20%;
+    }
+
+    .red {
+        padding: 15px;
+        background-color: red;
+        color: white;
+        width: 10cm;
+        position: absolute;
+        border-radius: 8px;
+        left: 63%;
+        top: 20%;
+    }
+
+
+
+
+    table {
+        width: 40%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgb(0, 0, 0);
+        margin: 20px 0;
+        margin-top: 70px;
+        margin-left: 600px;
+    }
+
+        table tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        table td {
+            padding: 10px;
+        }
+
+        table input[type="text"],
+        table select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        table input[type="submit"],
+        table input[type="reset"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        table input[type="submit"] {
+            background-color: green;
+            color: white;
+        }
+
+        table input[type="reset"] {
+            background-color: red;
+            color: white;
+        }
+</style>
+
+
+
+
+
+<script>
+
+
+
+
+    function onStateChange() {
+        var stateDropdown = document.getElementById("stateDropdown");
+        var cityDropdown = document.getElementById("cityDropdown");
+
+        cityDropdown.innerHTML = '<option value="">Select City</option>';
+
+        var selectedState = stateDropdown.value;
+
+        var cities = getCitiesByState(selectedState);
+
+        for (var i = 0; i < cities.length; i++) {
+            var option = document.createElement("option");
+            option.value = cities[i].Value;
+            option.text = cities[i].Text;
+            cityDropdown.add(option);
+        }
+    }
+
+
+    function getCitiesByState(state) {
+
+        switch (state) {
+            case "Telangana":
+                return [
+                    { Value: "hyderabad", Text: "Hyderabad" },
+                    { Value: "medak", Text: "Medak" },
+                    { Value: "rangareddy", Text: "Rangareddy" },
+                    { Value: "warangal", Text: "Warangal" }
+                ];
+            case "Andhra Pradesh":
+                return [
+                    { Value: "amaravati", Text: "Amaravati" },
+                    { Value: "kadapa", Text: "Kadapa" },
+                    { Value: "ongole", Text: "Ongole" },
+                    { Value: "kurnool", Text: "Kurnool" }
+                ];
+            case "Maharashtra":
+                return [
+                    { Value: "mumbai", Text: "Mumbai" },
+                    { Value: "pune", Text: "Pune" },
+                    { Value: "nagpur", Text: "Nagpur" },
+                    { Value: "nashik", Text: "Nashik" }
+                ];
+            case "Karnataka":
+                return [
+                    { Value: "bangalore", Text: "Bangalore" },
+                    { Value: "mysuru", Text: "Mysuru" },
+                    { Value: "hubli", Text: "Hubli" },
+                    { Value: "mangalore", Text: "Mangalore" }
+                ];
+            case "Tamil Nadu":
+                return [
+                    { Value: "chennai", Text: "Chennai" },
+                    { Value: "coimbatore", Text: "Coimbatore" },
+                    { Value: "madurai", Text: "Madurai" },
+                    { Value: "trichy", Text: "Trichy" }
+                ];
+            case "Gujarat":
+                return [
+                    { Value: "ahmedabad", Text: "Ahmedabad" },
+                    { Value: "surat", Text: "Surat" },
+                    { Value: "vadodara", Text: "Vadodara" },
+                    { Value: "rajkot", Text: "Rajkot" }
+                ];
+            case "Rajasthan":
+                return [
+                    { Value: "jaipur", Text: "Jaipur" },
+                    { Value: "jodhpur", Text: "Jodhpur" },
+                    { Value: "udaipur", Text: "Udaipur" },
+                    { Value: "kota", Text: "Kota" }
+                ];
+            case "Uttar Pradesh":
+                return [
+                    { Value: "lucknow", Text: "Lucknow" },
+                    { Value: "kanpur", Text: "Kanpur" },
+                    { Value: "agra", Text: "Agra" },
+                    { Value: "allahabad", Text: "Allahabad" }
+                ];
+            case "Delhi":
+                return [
+                    { Value: "newdelhi", Text: "New Delhi" },
+                    { Value: "noida", Text: "Noida" },
+                    { Value: "gurgaon", Text: "Gurgaon" },
+                    { Value: "faridabad", Text: "Faridabad" }
+                ];
+            case "Kerala":
+                return [
+                    { Value: "thiruvananthapuram", Text: "Thiruvananthapuram" },
+                    { Value: "kochi", Text: "Kochi" },
+                    { Value: "kozhikode", Text: "Kozhikode" },
+                    { Value: "thrissur", Text: "Thrissur" }
+                ];
+            case "Punjab":
+                return [
+                    { Value: "chandigarh", Text: "Chandigarh" },
+                    { Value: "amritsar", Text: "Amritsar" },
+                    { Value: "ludhiana", Text: "Ludhiana" },
+                    { Value: "patiala", Text: "Patiala" }
+                ];
+            case "Haryana":
+                return [
+                    { Value: "panchkula", Text: "Panchkula" },
+                    { Value: "ambala", Text: "Ambala" },
+                    { Value: "kurukshetra", Text: "Kurukshetra" },
+                    { Value: "hisar", Text: "Hisar" }
+                ];
+            case "Assam":
+                return [
+                    { Value: "guwahati", Text: "Guwahati" },
+                    { Value: "dibrugarh", Text: "Dibrugarh" },
+                    { Value: "jorhat", Text: "Jorhat" },
+                    { Value: "silchar", Text: "Silchar" }
+                ];
+            // Add more cases for other states
+            default:
+                return [];
+        }
+    }
+</script>
+<script>
+    window.onload = function () {
+        if ('@ViewBag.msg'.trim().length !== 0)
+        {
+
+            var greenElement = document.getElementById("green1");
+            greenElement.innerText = '@ViewBag.msg';
+
+            var greenAlertElement = document.getElementById("green");
+            greenAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                greenAlertElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Check if 'msg1' is not empty
+        if ('@ViewBag.msg1'.trim().length !== 0) {
+
+            var redElement = document.getElementById("red1");
+            redElement.innerText = '@ViewBag.msg1';
+
+            var redAlertElement = document.getElementById("red");
+            redAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                redAlertElement.style.display = 'none';
+            }, 3000);
+        }
+    };
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+    var myText = '';
+    $(document).ready(function ()
+
+    {
+
+
+        var d = $("#vs");
+
+
+
+        if ('@ViewBag.status'=== 'done')
+        {
+
+            d.css("display", "inline-block");
+        }
+    });
+
+
+        function add1()
+        {
+
+            window.location.href = "Addonlyplane?email="+'@ViewBag.em';
+
+        }
+
+
+</script>
+
+
+<h1 style="margin-top:65px; text-align:center;">Add Plane Owner Address</h1>
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>
+                Owner name
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.name, null, new { placeholder = "EX: Ramesh" }
+       )
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.name, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.email, new { placeholder = "EX: john@gmail.com" }
+       )
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.email, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                House no
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.Hno, new { placeholder = "EX: 2-123/1" }
+       )
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.Hno, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address Line
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.Address_line1, new { placeholder = "EX: Kamala nagar" })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.Address_line1, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                State name
+            </td>
+            <td>
+                @Html.DropDownListFor(e => e.state, new SelectList(
+     new List<SelectListItem>
+     {
+         new SelectListItem { Value = "", Text = "Select State" },
+         new SelectListItem { Value = "Andhra Pradesh", Text = "Andhra Pradesh" },
+
+
+          new SelectListItem { Value = "Delhi", Text = "Delhi" },
+
+              new SelectListItem { Value = "Gujarat", Text = "Gujarat" },
+         new SelectListItem { Value = "Haryana", Text = "Haryana" },
+
+         new SelectListItem { Value = "Karnataka", Text = "Karnataka" },
+         new SelectListItem { Value = "Kerala", Text = "Kerala" },
+
+     new SelectListItem { Value = "Maharashtra", Text = "Maharashtra" },
+
+       new SelectListItem { Value = "Punjab", Text = "Punjab" },
+         new SelectListItem { Value = "Rajasthan", Text = "Rajasthan" },
+
+      new SelectListItem { Value = "Tamil Nadu", Text = "Tamil Nadu" },
+new SelectListItem { Value = "Telangana", Text = "Telangana" },
+
+        new SelectListItem { Value = "Uttar Pradesh", Text = "Uttar Pradesh" },
+
+             }, "Value", "Text"
+         ), new { @class = "stateTextBox", onchange = "onStateChange()", id = "stateDropdown" })
+
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.state, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                City name
+            </td>
+            <td>
+                @Html.DropDownListFor(e => e.City, new SelectList(new List<SelectListItem>(), "Value", "Text"), new { @class = "cityTextBox", id = "cityDropdown" })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.City, null, new { @class = "e" })
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Country
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.Country, new { placeholder = "EX: India" })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.Country, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Pincode
+            </td>
+            <td>
+                @Html.TextBoxFor(e => e.pincode, new { placeholder = "EX: 502112" })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(e => e.pincode, null, new { @class = "e" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" />
+            </td>
+            <td><input type="reset" /></td>
+
+        </tr>
+
+    </table>
+
+
+}
+<button onclick="add1()" id="vs" style="display: none; margin-left: 863px;" class="btn btn-primary">Proceed</button>
+
+
+
+<div class="red" id="red" style="display:none;">
+
+    <strong>OOPS!</strong>
+    <div id="red1"></div>
+</div>
+<div class="green" id="green" style="display:none;">
+
+    <strong>SUCCESS!</strong>
+    <div id="green1"></div>
+</div>

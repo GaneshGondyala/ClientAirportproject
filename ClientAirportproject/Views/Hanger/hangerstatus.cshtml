@@ -1,0 +1,295 @@
+﻿
+@{
+    ViewBag.Title = "hangerstatus";
+}
+<div class="section">
+    <h2 style="text-align:center;">Hanger Status</h2>
+
+
+    <style>
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 8cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 40%;
+            top: 7%;
+        }
+
+        table {
+            width: 35%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgb(0, 0, 0);
+            margin: 20px 0;
+        }
+
+            table tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            table input[type="text"],
+            table input[type="date"],
+            table select,
+            table button {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            table button {
+                background-color: #4CAF50;
+                color: white;
+                cursor: pointer;
+                font-weight: bold;
+            }
+    </style>
+
+    <input type="button" style="position:absolute;right:5%;" class="btn btn-primary" value="Menu" onclick="window.location.href='/Plane/mgr'" />
+    <table style="margin-left:600px;">
+        <tr>
+            <th>
+                Select hanger ID
+            </th>
+            <td>
+                @Html.DropDownList("hno", new SelectList(new List<SelectListItem>(), "Value", "Text"), "--select--", new { id = "hidDropdown", @class = "aa" })
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Start range
+            </th>
+            <td>
+                @Html.TextBox("from", null, new { type = "date", @id = "fromdate" })
+            </td>
+        </tr>
+        <tr>
+            <th>end Range</th>
+            <td>
+                @Html.TextBox("to", null, new { type = "date", @id = "todate" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="f();">Click</button>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+
+    <table id="data" style="margin-left:599px;margin-top:50px;">
+    </table>
+
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+
+
+
+        $.ajax({
+            url: "https://ganeshgondyalaserver.azurewebsites.net/api/Hanger",
+            method: "GET",
+            success: function (planeData) {
+                var hid = [];
+
+                for (var i = 0; i < planeData.length; i++) {
+
+                    hid.push(planeData[i].HangerId)
+
+
+                }
+
+                var dropdown = $("#hidDropdown");
+                dropdown.empty();
+                dropdown.append($("<option />").val('').text('--select--'));
+                if (hid.length === 0) {
+                    dropdown.append($("<option />").val('').text('No hanger is available'));
+                }
+                else {
+                    $.each(hid, function (index, item) {
+
+                        dropdown.append($("<option />").val(item).text('HID:  ' + item));
+                    });
+                }
+
+            },
+            error: function (error) {
+                console.error("Error fetching data from Hanger API");
+            }
+        });
+
+
+
+
+
+
+        function f() {
+
+
+            var fromDate = document.getElementById("fromdate").value;
+
+            var toDate = document.getElementById("todate").value;
+            var hid = document.getElementById('hidDropdown').value;
+
+            var fromDateValue = document.getElementById('fromdate').value;
+            var toDateValue = document.getElementById('todate').value;
+            var dropdownValue = document.getElementById('hidDropdown').value;
+
+
+            var isValid = true;
+            var validationMessages = "";
+
+            if (fromDate.trim() === "") {
+                validationMessages += "Please start range Date.\n";
+                isValid = false;
+            }
+
+            if (toDate.trim() === "") {
+                validationMessages += "Please end range Date.\n";
+                isValid = false;
+            }
+
+            if (hid.trim() === '') {
+                validationMessages += "Please select Hanger Id.\n";
+                isValid = false;
+            }
+
+
+
+
+            if (!isValid) {
+
+
+                var redElement = document.getElementById("red1");
+                redElement.innerText = validationMessages;
+
+                var redAlertElement = document.getElementById("red");
+                redAlertElement.style.display = 'block';
+
+                // Set a timer to hide the alert after 3 seconds
+                setTimeout(function () {
+                    redAlertElement.style.display = 'none';
+                }, 3000);
+            }
+
+            else {
+
+                $.ajax({
+
+                    url: "https://ganeshgondyalaserver.azurewebsites.net/api/Planehanger",
+
+                    method: "GET",
+
+                    success: function (all1) {
+
+
+                        var all = [];
+
+                        for (var i = 0; i < all1.length; i++) {
+
+                            if (all1[i].fromdate > fromDate && all1[i].todate < toDate && all1[i].Hanger_Id === hid) {
+
+
+                                all.push(all1[i]);
+
+
+
+                            }
+
+
+
+                        }
+
+
+                        if (all.length === 0) {
+                            alert("No plane is allocated to this hanger in these dates");
+                        }
+
+                        else {
+                            var h = $('<tr>');
+                            h.append('<th>' + "Hanger_Id" + '</th>' + '<th>' + "Plane_Id" + '</th>' + '<th>' + "fromdate" + '</th>' + '<th>' + "todate" + '</th>');
+                            $('#data').append(h);
+
+
+
+
+                            for (var i = 0; i < all.length; i++) {
+
+
+
+
+                                var newRow = $('<tr>');
+
+                                newRow.append('<td>' + all[i].Hanger_Id + '</td>' + '<td>' + all[i].Plane_Id + '</td>' + '<td>' + all[i].fromdate + '</td>' + '<td>' + all[i].todate + '</td>');
+                                $('#data').append(newRow);
+
+
+
+
+
+
+
+                            }
+                        }
+
+
+
+
+
+
+
+                    },
+                    error: function (error) {
+                        console.error("Error fetching data from Hanger API");
+                    }
+
+
+
+                });
+                return true;
+
+            }
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+    </script>
+</div>

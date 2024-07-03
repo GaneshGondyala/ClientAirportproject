@@ -1,0 +1,203 @@
+﻿<html>
+<head>
+
+
+    <link href="~/Models/mystyles.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function preventBack()
+        {
+          
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function () { null };
+    </script>
+    <style>
+        .slider {
+            width: 80%;
+            margin: auto;
+            height: 95%;
+        }
+
+            .slider img {
+                width: 100%;
+            }
+
+        .alert {
+            position: relative;
+            padding: 4px 30px;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 1rem;
+            margin-right: 0rem;
+            margin-top: 1rem;
+        }
+
+        .alert-success {
+            color: #0f5132;
+            background-color: #d1e7dd;
+            border-color: #badbcc;
+        }
+
+        .btn {
+            position: relative;
+            padding: 10px 30px;
+            margin-bottom: 1rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            margin-right: 0rem;
+            margin-top: 0rem;
+        }
+
+        .card {
+            display: none;
+            background-color: #0f5132;
+            padding: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            min-width: 1px;
+            margin-bottom: 10px;
+        }
+
+        #goback {
+            background-color: lightblue;
+            border-radius: 1rem;
+        }
+
+        #card1 {
+            display: none;
+            background-color: #0f5132;
+            padding: 1px;
+            margin-top: 10px;
+            margin-right: 00px;
+            min-width: 1px;
+        }
+    </style>
+</head>
+<body style="margin:0%;">
+    <div style="height:10%; width:100%;background-color:#537887; padding: 15px; margin-top:0%;text-align:center;font-size:40px;color: white;font-family:sans-serif">
+        <img src="~/images/logoplane.png"  width="170" height="95" class="d-inline-block align-text-top">
+        GSRD Airport
+    </div>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm " style="margin-left:0%; height:5%;background-color:aliceblue">
+        <div style="margin-left: 39%">
+
+            <button type="button" id="btnn" class="alert alert-success " role="alert" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="A hanger is an area where the repairing and servicing
+                    of aircraft are performed.The taxiway is nearby the hanger
+                    connected with the runway so when an emergency repair
+                    is required for an aircraft it can be transported to the
+                    hanger quickly. It is built in the form of a huge shed
+                    utilizing steel trusses and frames.The aircraft hangar
+                    tent is the latest tent series developed by Liri Tent ,
+                    applying to the Naval Aviation and Civil Aviation as
+                    temporary or permanent hangars for light aircrafts." style="background-color:aliceblue" onclick="window.location.href='/FliteManager/About'">
+                <h4>About</h4>
+            </button>
+
+
+            <button type="button" id="btn" class="alert alert-success" role="alert" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="In the event of a disaster or emergency situation, airports
+            provide a range of services.These services include
+            platform for rescue and relief operations,communications
+            infrastructure,air transport for medical evacuation
+            rescue efforts.This military tent has no fixed size,
+            it can be tailored depending on the size of the plane,
+            and can choose variety uses optional configurations." style="background-color:aliceblue"onclick="window.location.href='/FliteManager/Services'">
+                <h4> Service</h4>
+            </button>
+            <button type="button" id="btttn" class="alert alert-success" role="alert" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Contact Details:
+                                     Name:-Dinakar Dommata
+                                     Email:-dinakar123@gmail.com
+                                     Mobile Number:-8309853364" style="background-color:aliceblue"onclick="window.location.href='/FliteManager/Contact'">
+                <h4>Contact</h4>
+            </button>
+            <button type="button" id="login" class="alert alert-success" role="alert" data-bs-toggle="tooltip" data-bs-placement="top" style="background-color:aliceblue"><h4>Login</h4></button>
+
+
+        </div>
+    </nav>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="margin:auto">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/Images/flite6 (3).jpg" style="width:100%;height:85%" class="d-block w-100" alt="Flite1">
+
+                <div class="carousel-caption d-none d-md-block" style="margin-bottom: 25%;margin-left:25%">
+                    <h6 style="font-size:45px;color:aqua;">Welcome To GSRD AirPort</h6>
+                    <h3 style="color:white;font-family:cursive">Most of the world's large airports are owned by local, regional, or national government bodies who then lease the airport to private corporations.</h3>
+                    <h3><input type="button" id="myButton" class="btn btn-outline-info" value="More information" /></h3>
+
+                    <div id="" class="card" style="width: 20rem;height:10px;">
+
+                        <img src="~/Images/flite1.jpg" class="card-img-top" alt="Flite8">
+                        <div class="card-body">
+                            <p class="card-text" style="color:ghostwhite;font-size:20px;">
+                                "A hanger is an area where the repairing and servicing of aircraft are performed.The taxiway is nearby the hanger connected with the runway."
+                            </p>
+
+                        </div>
+                    </div>
+                    <input type="button" id="goback" value="go back" style="display:none" />
+
+                </div>
+            </div>
+
+
+            <div class="carousel-item">
+                <img src="~/Images/flite1.jpg" style="width:100%;height:85%" class="d-block w-100" alt="Flite7">
+                <div class="carousel-caption d-none d-md-block" style="margin-bottom:25%">
+                    <h1 style="font-size:55px;color:burlywood;">Fast, Frequent & Direct Flights</h1>
+                    <h3 style="color: bisque; font-family: cursive">Most of the world's large airports are owned by local, regional, or national government bodies who then lease the airport to private corporations who oversee the airport's operation. For example, in the UK the state-owned British Airports Authority originally operated eight of the nation's major commercial airports – it was subsequently privatized in the late 1980s, and following its takeover by the Spanish Ferrovial consortium in 2006, has been further divested and downsized to operating just Heathrow.</h3>
+                </div>
+
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/hangerBB.jpg" style="width:100%;height:85%" class="d-block w-100" alt="Hanger2">
+                <div class="carousel-caption d-none d-md-block" style="margin-bottom:25%">
+                    <h1 style="font-size: 55px; color:aquamarine;">Welcome To GSRD Airport Website</h1>
+                    <h3 style="color:white; font-family: cursive">Most of the world's large airports are owned by local, regional, or national government bodies who then lease the airport to private corporations who oversee the airport's operation. For example, in the UK the state-owned British Airports Authority originally operated eight of the nation's major commercial airports – it was subsequently privatized in the late 1980s, and following its takeover by the Spanish Ferrovial consortium in 2006, has been further divested and downsized to operating just Heathrow.</h3>
+                </div>
+            </div>
+        </div>
+        <input type="button" id="goback" value="go back" style="display:none" />
+    </div>
+
+
+    <script>$(document).ready(function () {
+
+            $("input").click(function () {
+                $(".card").show();
+                $("#myButton").hide();
+                $("#goback").show();
+            });
+            $("#goback").click(function () {
+                $(".card").hide();
+                $("#goback").hide();
+                $("#myButton").show()
+
+
+            });
+            $("#login").click(function () {
+                $("#Login").show();
+                window.location.href = "/FliteManager/Login";
+            });
+        });</script>
+
+    <div class="container body-content" style="display:none">
+
+
+        @RenderBody()
+
+        <hr />
+
+    </div>
+</body>
+</html>

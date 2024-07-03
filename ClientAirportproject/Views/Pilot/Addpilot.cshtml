@@ -1,0 +1,596 @@
+﻿@model ClientAirportproject.Models.Pilot_addresclass
+@{
+    ViewBag.Title = "Addpilot";
+}
+<div class="section">
+    <h2 style="text-align:center; margin-top:50px;">Addpilot</h2>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function onCityBlur() {
+            var city = $(".cityTextBox").val();
+            var hno = $(".hnoTextBox").val();
+
+            $.ajax({
+                url: 'https://ganeshgondyalaserver.azurewebsites.net/api/Address',
+                method: 'GET',
+                data: { Hno: hno, City: city },
+                success: function (data) {
+                    var filteredData = data.filter(function (item) {
+                        return item.City === city && item.Hno === hno;
+                    });
+
+                    if (filteredData.length > 0) {
+                        $("#adrid").val(filteredData[0].AddressId);
+                        $(".stateTextBox").val(filteredData[0].state);
+                        $(".countryTextBox").val(filteredData[0].Country);
+                        $(".pincodeTextBox").val(filteredData[0].pincode);
+                        $(".adrlTextBox").val(filteredData[0].Address_line1);
+                    } else {
+                        $("#blue1").text("No owner exist with the provided address");
+                        document.getElementById("blue1").innerText = "Enter all fields no matched city, House No found";
+
+
+                        var alertElement = document.getElementById("blue");
+                        alertElement.style.display = 'block';
+
+                        // Set a timer to hide the alert after 3 seconds
+                        setTimeout(function () {
+                            alertElement.style.display = 'none';
+                        }, 3000);
+                    }
+                },
+                error: function () {
+                    alert("Error fetching data from API1");
+                }
+            });
+        }
+
+        function closePopups() {
+            $("#popup").hide();
+        }
+
+        function closePopupf() {
+            $("#popup").hide();
+        }
+
+    </script>
+    <script>
+        function onStateChange() {
+            var stateDropdown = document.getElementById("stateDropdown");
+            var cityDropdown = document.getElementById("cityDropdown");
+
+            cityDropdown.innerHTML = '<option value="">Select City</option>';
+
+            var selectedState = stateDropdown.value;
+
+            var cities = getCitiesByState(selectedState);
+
+            for (var i = 0; i < cities.length; i++) {
+                var option = document.createElement("option");
+                option.value = cities[i].Value;
+                option.text = cities[i].Text;
+                cityDropdown.add(option);
+            }
+        }
+
+        // Example function to get cities based on the selected state
+        function getCitiesByState(state) {
+            // Implement your logic to get cities based on the selected state
+            // This can be done using AJAX to call a controller action or any other method
+            // For simplicity, I'll provide a hardcoded example
+            switch (state) {
+                case "Telangana":
+                    return [
+                        { Value: "hyderabad", Text: "Hyderabad" },
+                        { Value: "medak", Text: "Medak" },
+                        { Value: "rangareddy", Text: "Rangareddy" },
+                        { Value: "warangal", Text: "Warangal" }
+                    ];
+                case "Andhra Pradesh":
+                    return [
+                        { Value: "amaravati", Text: "Amaravati" },
+                        { Value: "kadapa", Text: "Kadapa" },
+                        { Value: "ongole", Text: "Ongole" },
+                        { Value: "kurnool", Text: "Kurnool" }
+                    ];
+                case "Maharashtra":
+                    return [
+                        { Value: "mumbai", Text: "Mumbai" },
+                        { Value: "pune", Text: "Pune" },
+                        { Value: "nagpur", Text: "Nagpur" },
+                        { Value: "nashik", Text: "Nashik" }
+                    ];
+                case "Karnataka":
+                    return [
+                        { Value: "bangalore", Text: "Bangalore" },
+                        { Value: "mysuru", Text: "Mysuru" },
+                        { Value: "hubli", Text: "Hubli" },
+                        { Value: "mangalore", Text: "Mangalore" }
+                    ];
+                case "Tamil Nadu":
+                    return [
+                        { Value: "chennai", Text: "Chennai" },
+                        { Value: "coimbatore", Text: "Coimbatore" },
+                        { Value: "madurai", Text: "Madurai" },
+                        { Value: "trichy", Text: "Trichy" }
+                    ];
+                case "Gujarat":
+                    return [
+                        { Value: "ahmedabad", Text: "Ahmedabad" },
+                        { Value: "surat", Text: "Surat" },
+                        { Value: "vadodara", Text: "Vadodara" },
+                        { Value: "rajkot", Text: "Rajkot" }
+                    ];
+                case "Rajasthan":
+                    return [
+                        { Value: "jaipur", Text: "Jaipur" },
+                        { Value: "jodhpur", Text: "Jodhpur" },
+                        { Value: "udaipur", Text: "Udaipur" },
+                        { Value: "kota", Text: "Kota" }
+                    ];
+                case "Uttar Pradesh":
+                    return [
+                        { Value: "lucknow", Text: "Lucknow" },
+                        { Value: "kanpur", Text: "Kanpur" },
+                        { Value: "agra", Text: "Agra" },
+                        { Value: "allahabad", Text: "Allahabad" }
+                    ];
+                case "Delhi":
+                    return [
+                        { Value: "newdelhi", Text: "New Delhi" },
+                        { Value: "noida", Text: "Noida" },
+                        { Value: "gurgaon", Text: "Gurgaon" },
+                        { Value: "faridabad", Text: "Faridabad" }
+                    ];
+                case "Kerala":
+                    return [
+                        { Value: "thiruvananthapuram", Text: "Thiruvananthapuram" },
+                        { Value: "kochi", Text: "Kochi" },
+                        { Value: "kozhikode", Text: "Kozhikode" },
+                        { Value: "thrissur", Text: "Thrissur" }
+                    ];
+                case "Punjab":
+                    return [
+                        { Value: "chandigarh", Text: "Chandigarh" },
+                        { Value: "amritsar", Text: "Amritsar" },
+                        { Value: "ludhiana", Text: "Ludhiana" },
+                        { Value: "patiala", Text: "Patiala" }
+                    ];
+                case "Haryana":
+                    return [
+                        { Value: "panchkula", Text: "Panchkula" },
+                        { Value: "ambala", Text: "Ambala" },
+                        { Value: "kurukshetra", Text: "Kurukshetra" },
+                        { Value: "hisar", Text: "Hisar" }
+                    ];
+                case "Assam":
+                    return [
+                        { Value: "guwahati", Text: "Guwahati" },
+                        { Value: "dibrugarh", Text: "Dibrugarh" },
+                        { Value: "jorhat", Text: "Jorhat" },
+                        { Value: "silchar", Text: "Silchar" }
+                    ];
+                // Add more cases for other states
+                default:
+                    return [];
+            }
+        }
+
+    </script>
+    <script>
+    window.onload = function () {
+        if ('@ViewBag.msg'.trim().length !== 0)
+        {
+
+            var greenElement = document.getElementById("green1");
+            greenElement.innerText = '@ViewBag.msg';
+
+            var greenAlertElement = document.getElementById("green");
+            greenAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                greenAlertElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Check if 'msg1' is not empty
+        if ('@ViewBag.msg1'.trim().length !== 0) {
+
+            var redElement = document.getElementById("red1");
+            redElement.innerText = '@ViewBag.msg1';
+
+            var redAlertElement = document.getElementById("red");
+            redAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                redAlertElement.style.display = 'none';
+            }, 3000);
+        }
+    };
+    </script>
+
+    <style>
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .blue {
+            padding: 15px;
+            background-color: deepskyblue;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            left: 63%;
+            top: 20%;
+        }
+
+        /*blue color*/
+        .green {
+            padding: 15px;
+            background-color: forestgreen;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        .e {
+            color: red;
+        }
+        /* red Alert*/
+
+
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        table.form-table {
+            width: 50%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            background-color:white;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
+            margin-left: 120px;
+            margin-top: 60px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .form-column {
+            width: 50%;
+        }
+
+        input[type="text"],
+        select,
+        input[type="date"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+            input[type="text"]:hover,
+            select:hover,
+            input[type="date"]:hover {
+                border-color: #4CAF50;
+            }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+            .input-container:last-child {
+                margin-bottom: 0;
+            }
+
+            .input-container label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .input-container input,
+            .input-container select {
+                width: calc(100% - 16px);
+                padding: 8px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                transition: border-color 0.3s ease;
+            }
+
+                .input-container input:hover,
+                .input-container select:hover {
+                    border-color: #4CAF50;
+                }
+
+        .form-buttons {
+            text-align: center;
+        }
+
+        #status {
+            text-align: center;
+        }
+
+        #popup {
+            display: flex;
+            justify-content: center;
+            background-color: #f0f0f0;
+            align-items: center;
+        }
+
+            #popup img {
+                width: 70px;
+                height: 55px;
+                border-radius: 50%;
+            }
+
+            #popup .btn {
+                margin: 5px;
+            }
+    </style>
+
+    @using (Html.BeginForm())
+    {
+
+        <div class="form-container">
+            <table class="form-table">
+                <tr>
+                    <td class="form-column">
+                        <table>
+
+                            <tr>
+
+                                <th>
+                                    Enter License number
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.plt.License_no, new { placeholder = "EX: TS1234567890" }
+                           )
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.plt.License_no, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Social security number
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.plt.SSN, new { placeholder = "EX: 678901234578" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.plt.SSN, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Date of birth
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.plt.DOB, new { type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                </td>
+                                <td style="margin-left:30px;">
+                                    @Html.ValidationMessageFor(e => e.plt.DOB, null, new { @class = "e" })
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gender
+                                </th>
+
+                                <td>
+                                    @Html.DropDownListFor(e => e.plt.Gender, new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Text = "Male", Value = "Male" },
+                                        new SelectListItem { Text = "Female", Value = "Female" },
+                                        new SelectListItem { Text = "Other", Value = "Other" }
+                                    }, "Select Gender")
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.plt.Gender, null, new { @class = "e" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <tH>
+                                    Mobile number
+                                </tH>
+                                <td>
+                                    @Html.TextBoxFor(e => e.plt.Mobile, new { placeholder = "EX: 9505438681" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.plt.Mobile, null, new { @class = "e" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Email address
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.plt.Email, new { placeholder = "EX: abcd1729@gmail.com" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.plt.Email, null, new { @class = "e" })
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="form-column">
+                        <table>
+                            <tr>
+                                <th>
+                                    House No
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.adrcla.Hno, new { @class = "hnoTextBox", placeholder = "EX: 7-123-23/a" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.Hno, null, new { @class = "e" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    State name
+                                </th>
+                                <td>
+                                    @Html.DropDownListFor(e => e.adrcla.state, new SelectList(
+                         new List<SelectListItem>
+                         {
+                             new SelectListItem { Value = "", Text = "Select State" },
+                             new SelectListItem { Value = "Andhra Pradesh", Text = "Andhra Pradesh" },
+
+
+                              new SelectListItem { Value = "Delhi", Text = "Delhi" },
+
+                                  new SelectListItem { Value = "Gujarat", Text = "Gujarat" },
+                             new SelectListItem { Value = "Haryana", Text = "Haryana" },
+
+                             new SelectListItem { Value = "Karnataka", Text = "Karnataka" },
+                             new SelectListItem { Value = "Kerala", Text = "Kerala" },
+
+                         new SelectListItem { Value = "Maharashtra", Text = "Maharashtra" },
+
+                           new SelectListItem { Value = "Punjab", Text = "Punjab" },
+                             new SelectListItem { Value = "Rajasthan", Text = "Rajasthan" },
+
+                          new SelectListItem { Value = "Tamil Nadu", Text = "Tamil Nadu" },
+                    new SelectListItem { Value = "Telangana", Text = "Telangana" },
+
+                            new SelectListItem { Value = "Uttar Pradesh", Text = "Uttar Pradesh" },
+
+                                 }, "Value", "Text"
+                             ), new { @class = "stateTextBox", onchange = "onStateChange()", id = "stateDropdown" })
+
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.state, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    City name
+                                </th>
+                                <td>
+                                    @Html.DropDownListFor(e => e.adrcla.City, new SelectList(new List<SelectListItem>(), "Value", "Text"), new { @class = "cityTextBox", id = "cityDropdown", placeholder = "EX: City", onchange = "onCityBlur()" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.City, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+
+
+                            <tr>
+                                <th>
+                                    Address Line-1
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.adrcla.Address_line1, new { @class = "adrlTextBox", placeholder = "EX: Nehru colony" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.Address_line1, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <th>
+                                    Country name
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.adrcla.Country, new { @class = "countryTextBox", placeholder = "EX: India" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.Country, null, new { @class = "e" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Pincode
+                                </th>
+                                <td>
+                                    @Html.TextBoxFor(e => e.adrcla.pincode, new { @class = "pincodeTextBox", placeholder = "EX: 502119" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(e => e.adrcla.pincode, null, new { @class = "e" })
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="text" hidden id="adrid" name="adrid" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="form-buttons">
+                        <input type="submit" value="Submit" class="btn btn-primary" style="margin-left:10px;" />
+                        <input type="reset" class="btn btn-danger" value="Reset" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+
+    <div id="status"></div>
+    <div class="blue" id="blue" style="display:none;">
+
+        <strong>Oh!</strong>
+        <div id="blue1"></div>
+
+    </div>
+
+
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+    <div class="green" id="green" style="display:none;">
+
+        <strong>SUCCESS!</strong>
+        <div id="green1"></div>
+    </div>
+
+    </div>
+
+

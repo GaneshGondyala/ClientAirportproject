@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style>
+        #login {
+            position: relative;
+            padding: 10px 30px;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 25px;
+            margin-right: 0rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            position: relative;
+            padding: 10px 40px;
+            margin-bottom: 1rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            margin-right: 0rem;
+            margin-top: 1rem;
+        }
+
+        #login {
+            padding: 0rem;
+        }
+    </style>
+    <script>
+
+
+
+
+
+
+        function back() {
+
+            var id = document.getElementById("u").value;
+
+
+            window.location.href = '/Plane/Adminn?id=' + id;
+
+        }
+
+    </script>
+    <script type="text/javascript">
+        function preventBack() {
+
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function () { null };
+    </script>
+</head>
+<body>
+   
+    <div style="height:10%; width:100%;background-color:#537887; height:10%; margin-top:0%;text-align:center;font-size:40px;color: white">
+     <img src="~/images/logoplane.png" width="120" height="50" class="d-inline-block align-text-top">
+        GSRD Airport
+        <input type="button" style="position:absolute;right:14%;" class="btn btn-primary" value="LogOut"  onclick="window.location.href = '/FliteManager/Logout2';" />
+        <input type="button" style="position:absolute;right:5%;" class="btn btn-primary" value="Menu" onclick="back()" />
+        @*<a onclick="profile()"> <img src="~/images/user.jpg" width="70px" height="65px" style="border-radius:50%;position:absolute;right:0%;padding-top:2px;" /></a>*@
+    </div>
+    <div style="height:10%; width:100%;background-color:aliceblue; margin-top:0%;text-align:center;font-size:30px;color: white">
+        <button type="reset" id="login" class="alert alert-success" role="alert" data-bs-toggle="tooltip" data-bs-placement="top" style="background-color:white"></button>
+        <marquee width="30%" direction="left" height="50px" style="color: Black; font-family: serif;">
+            Let Your Dreams Take Fly.....
+        </marquee>
+    </div>
+   
+    <div>
+        <h2> Welecome, @Session["user"]</h2>
+        <input type="hidden" id="u" value="@Session["user"]" />
+
+        @RenderBody()
+
+
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "ManagerDetails";
+}
+
+<script>
+  
+
+        var id = document.getElementById("u").value;
+        $.ajax({
+            url: 'https://ganeshgondyalaserver.azurewebsites.net/api/managerr',
+            method: 'GET',
+
+            success: function (pw1) {
+
+                data = [];
+                for (var i = 0; i < pw1.length; i++) {
+
+                    if (pw1[i].ManagerId == id)
+                    {
+                        var tt = document.getElementsByClassName("dd");
+                        $(".dd").show();
+                        
+                        var s = pw1[i].Name;
+                        var a = pw1[i].SSN;
+                        var b = pw1[i].DOB;
+                        var g = pw1[i].Gender;
+                        var f = pw1[i].mobile;
+                        var h = pw1[i].email;
+                        document.getElementById("name").innerText = s;
+                        document.getElementById("ssn").innerText = a;
+                        document.getElementById("dob").innerText = b;
+                        document.getElementById("gender").innerText = g;
+                        document.getElementById("mobile").innerText = f;
+                        document.getElementById("email").innerText = h;
+
+
+                    }
+                }
+
+
+
+
+
+
+
+
+            },
+            error: function () {
+                alert("Error fetching data from API1");
+            }
+        });
+
+
+    
+
+</script>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -15%; /* Adjust as needed */
+    }
+
+    .dd {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    }
+    h1{
+        display:flex;
+        justify-content:center;
+        
+    }
+
+        .dd:last-child {
+            margin-right: 0;
+        }
+
+        /* Neat spacing between th and td */
+        .dd table th,
+        .dd table td {
+            padding: 16px; /* Increase padding for better spacing */
+            font-size: 20px; /* Increase font size */
+        }
+
+            /* Reduce margin-top by 30% */
+            .dd table th:first-child,
+            .dd table td:first-child {
+                margin-top: 10px; /* Adjust as needed */
+            }
+
+
+</style>
+
+<h1>ManagerDetails</h1>
+<div class="container">
+    <div class="dd">
+        <table>
+            <tr>
+                <th>Name</th>
+                <td><div id="name"></div></td>
+            </tr>
+            <tr>
+                <th>SSN</th>
+                <td><div id="ssn"></div></td>
+            </tr>
+            <tr>
+                <th>DOB</th>
+                <td><div id="dob"></div></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td><div id="gender"></div></td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td><div id="mobile"></div></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><div id="email"></div></td>
+            </tr>
+        </table>
+    </div>
+</div>

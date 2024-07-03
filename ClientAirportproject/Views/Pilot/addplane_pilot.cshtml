@@ -1,0 +1,272 @@
+﻿
+@{
+    ViewBag.Title = "addplane_pilot";
+}<div class="section">
+    <style>
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        .green {
+            padding: 15px;
+            background-color: greenyellow;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        table {
+            width: 23%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgb(0, 0, 0);
+            margin: 20px 0;
+            margin-top: 150px;
+            margin-left: 720px;
+        }
+
+            table tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            table input[type="text"],
+            table input[type="date"],
+            table select,
+            table button {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            table button {
+                background-color: #4CAF50;
+                color: white;
+                cursor: pointer;
+                font-weight: bold;
+            }
+    </style>
+
+    <h2 style="margin-top:70px; text-align:center;">Addplane Pilot</h2>
+
+
+
+
+
+    <table>
+        <tr>
+            <td>
+                select Plane ID
+            </td>
+            <td>
+                @Html.DropDownList("hh", new SelectList(new List<SelectListItem>(), "Value", "Text"), "--select--", new { id = "pdown", @class = "aa" })
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Select pilote ID
+            </td>
+            <td>
+                @Html.DropDownList("jj", new SelectList(new List<SelectListItem>(), "Value", "Text"), "--select--", new { id = "pdown1", @class = "aa" })
+            </td>
+        </tr>
+        <tr>
+            <td><button onclick="f1()">Submit</button></td>
+        </tr>
+    </table>
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+
+    <div class="green" id="green" style="display:none;">
+
+        <strong>SUCCESS!</strong>
+        <div id="green1"></div>
+    </div>
+
+
+
+
+
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+
+
+               function f1()
+               {
+
+                        var planeid = document.getElementById("pdown").value;
+                        var piloteid = document.getElementById("pdown1").value;
+                        var str = '';
+
+
+                        if (planeid.trim().length == 0)
+                        {
+                            str = str + "select plane ID \n";
+                        }
+                        if (piloteid.trim().length == 0) {
+                            str = str + "Select Pilote ID";
+                        }
+                        if (str.length != 0) {
+                            var redElement = document.getElementById("red1");
+                            redElement.innerText = str;
+
+                            var redAlertElement = document.getElementById("red");
+                            redAlertElement.style.display = 'block';
+
+                            // Set a timer to hide the alert after 3 seconds
+                            setTimeout(function () {
+                                redAlertElement.style.display = 'none';
+                            }, 3000);
+                        } else {
+                            window.location.href = "addpilote_plane1?pnid=" + planeid + "&plid=" + piloteid;
+                        }
+                 }
+
+
+
+        $.ajax({
+            url: "https://ganeshgondyalaserver.azurewebsites.net/api/plane_pilot",
+            method: "GET",
+            success: function (plpl)
+            {
+                $.ajax({
+                    url: "https://ganeshgondyalaserver.azurewebsites.net/api/Plane",
+                    method: "GET",
+                    success: function (p)
+                    {
+                        var pid = [];
+                        for (var j = 0; j < p.length; j++)
+                        {
+                            if (plpl.length == 0) {
+                                pid.push(p[j].Plane_Id);
+                            }
+                            else
+                            {
+                                var flag = 0;
+                                for (var i = 0; i < plpl.length; i++) {
+                                    if (plpl[i].Plane_id === p[j].Plane_Id)
+                                    {
+                                        flag = 1;
+                                      
+                                    }
+                                }
+                                if (flag == 0)
+                                {
+                                    pid.push(p[j].Plane_Id);
+                                }
+                            }
+                        }
+                        var dropdown1 = $("#pdown");
+                        dropdown1.empty();
+                        dropdown1.append($("<option />").val('').text('--select--'));
+                        if (pid.length === 0)
+                        {
+                            dropdown1.append($("<option />").val('').text('all planes alloted to pilots'));
+                        }
+                        else
+                        {
+                            $.each(pid, function (index, item) {
+                                dropdown1.append($("<option />").val(item).text('Plane ID: ' + item));
+                            });
+                        }
+                    },
+                    error: function (error)
+                    {
+                        console.error("Error fetching data from Hanger API");
+                    }
+                });
+                $.ajax({
+                    url: "https://ganeshgondyalaserver.azurewebsites.net/api/Pilot",
+                    method: "GET",
+                    success: function (pl) {
+                        var pid = [];
+                        for (var j = 0; j < pl.length; j++) {
+                            if (plpl.length == 0) {
+                                pid.push(pl[j].Pilot_Id)
+                            } else
+                            {
+                                var flag = 0;
+                                for (var i = 0; i < plpl.length; i++)
+                                {
+                                    if (plpl[i].Pilot_id == pl[j].Pilot_Id)
+                                    {
+                                        flag = 1;
+                                       
+                                    }
+                                }
+                                if (flag == 0)
+                                {
+                                    pid.push(pl[j].Pilot_Id);
+                                }
+                            }
+                        }
+                        var dropdown1 = $("#pdown1");
+                        dropdown1.empty();
+                        dropdown1.append($("<option />").val('').text('--select--'));
+                        if (pid.length === 0) {
+                            dropdown1.append($("<option />").val('').text('all pilotsare  alloted to planes'));
+                        } else {
+                            $.each(pid, function (index, item) {
+                                dropdown1.append($("<option />").val(item).text('Pilote ID: ' + item));
+                            });
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error fetching data from Hanger API");
+                    }
+                });
+            },
+            error: function (error) {
+                console.error("Error fetching data from Hanger API");
+            }
+        });
+     
+    </script>
+    <script>
+        window.onload = function ()
+        {
+            if ('@ViewBag.msg'.trim().length !== 0) {
+
+                var greenElement = document.getElementById("green1");
+                greenElement.innerText = '@ViewBag.msg';
+
+                var greenAlertElement = document.getElementById("green");
+                greenAlertElement.style.display = 'block';
+
+                // Set a timer to hide the alert after 3 seconds
+                setTimeout(function () {
+                    greenAlertElement.style.display = 'none';
+                }, 3000);
+            }
+        };
+    </script>
+

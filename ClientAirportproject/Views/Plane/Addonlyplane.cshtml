@@ -1,0 +1,219 @@
+﻿@model ClientAirportproject.Models.PlaneOnly
+@{
+    ViewBag.Title = "Addonlyplane";
+}
+<div class="section">
+    <style>
+        body {
+            background-image: url('../../images/new.jpg');
+            background-size: cover;
+        }
+
+        .e {
+            color: red;
+        }
+
+        .green {
+            padding: 15px;
+            background-color: forestgreen;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        .red {
+            padding: 15px;
+            background-color: red;
+            color: white;
+            width: 10cm;
+            position: absolute;
+            border-radius: 8px;
+            left: 63%;
+            top: 20%;
+        }
+
+        table {
+            width: auto;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgb(0, 0, 0);
+            margin: 20px 0;
+            margin-left: 740px;
+            margin-top: 100px;
+        }
+
+            table tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+            table td {
+                padding: 10px;
+            }
+
+            table input[type="text"],
+            table select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            table input[type="submit"],
+            table input[type="reset"] {
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+
+            table input[type="submit"] {
+                background-color: green;
+                color: white;
+            }
+
+            table input[type="reset"] {
+                background-color: red;
+                color: white;
+            }
+
+        .styling {
+            font-family: math;
+            font-weight: 600;
+            font-size: xx-large;
+        }
+    </style>
+    <script>
+    window.onload = function () {
+        if ('@ViewBag.msg'.trim().length !== 0)
+        {
+
+            var greenElement = document.getElementById("green1");
+            greenElement.innerText = '@ViewBag.msg';
+
+            var greenAlertElement = document.getElementById("green");
+            greenAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                greenAlertElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Check if 'msg1' is not empty
+        if ('@ViewBag.msg1'.trim().length !== 0) {
+
+            var redElement = document.getElementById("red1");
+            redElement.innerText = '@ViewBag.msg1';
+
+            var redAlertElement = document.getElementById("red");
+            redAlertElement.style.display = 'block';
+
+            // Set a timer to hide the alert after 3 seconds
+            setTimeout(function () {
+                redAlertElement.style.display = 'none';
+            }, 3000);
+        }
+    };
+    </script>
+    <div class="red" id="red" style="display:none;">
+
+        <strong>OOPS!</strong>
+        <div id="red1"></div>
+    </div>
+    <div class="green" id="green" style="display:none;">
+
+        <strong>SUCCESS!</strong>
+        <div id="green1"></div>
+    </div>
+
+    <h2 class="styling" style="margin-top:70px; text-align:center;">Add only Plane</h2>
+    <h3 style="text-align:center;">You are adding planes of @Session["email1"]</h3>
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr>
+                <td>
+                    plane registration no
+                </td>
+                <td>
+                    @Html.TextBoxFor(e => e.RegistrationNo
+           )
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.RegistrationNo, null, new { @class = "e" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Model number
+                </td>
+                <td>
+                    @Html.DropDownListFor(e => e.ModelNo, new List<SelectListItem>
+     {
+         new SelectListItem { Text = "A319-100", Value = "A319-100" },
+         new SelectListItem { Text = "A320-200", Value = "A320-200" },
+         new SelectListItem { Text = "B737-800", Value = "B737-800" },
+         new SelectListItem { Text = "A319-132", Value = "A319-132" },
+         new SelectListItem { Text = "A319-112", Value = "A319-112" },
+         new SelectListItem { Text = "A320-232", Value = "A320-232" },
+         new SelectListItem { Text = "B737-8F2(WL)", Value = "B737-8F2(WL)" }
+     }, "Select Model")
+
+
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.ModelNo, null, new { @class = "e" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Plane name
+                </td>
+                <td>
+                    @Html.TextBoxFor(e => e.Plane_Name)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.Plane_Name, null, new { @class = "e" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    plane capacity
+                </td>
+                <td>
+                    @Html.TextBoxFor(e => e.Capacity)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(e => e.Capacity, null, new { @class = "e" })
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <input type="submit" />
+                </td>
+                <td><input type="reset" /></td>
+            </tr>
+
+        </table>
+
+
+    }
+    @if (ViewBag.msgpl != null)
+    {
+        @ViewBag.msgpl;
+    }
+    @if (ViewBag.msgnopl != null)
+    {
+        @ViewBag.msgnopl;
+    }
+    </div>

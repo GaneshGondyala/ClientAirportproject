@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript">
+        function preventBack() {
+
+            window.history.forward();
+        }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function () { null };
+    </script>
+    <style>
+        #login {
+            position: relative;
+            padding: 10px 30px;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 25px;
+            margin-right: 0rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            position: relative;
+            padding: 10px 40px;
+            margin-bottom: 1rem;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            margin-right: 0rem;
+            margin-top: 1rem;
+        }
+
+        #login {
+            padding: 0rem;
+        }
+
+        #menu:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div style="height:10%; width:100%;background-color:#537887; height:10%; margin-top:0%;text-align:center;font-size:40px;color: white">
+        <img src="~/images/logoplane.png" width="120" height="50" class="d-inline-block align-text-top">
+        GSRD Airport
+        <button class="alert alert-success btn btn-primary" role="alert" data-bs-toggle="tooltip" data-bs-placement="top" style="background-color:white;position:absolute;right:1%;top:0.35%;" id="menu" onclick="window.location.href='/FliteManager/Logout'">Back to Menu</button>
+    </div>
+    <div style="height:10%; width:100%;background-color:aliceblue; margin-top:0%;text-align:center;font-size:30px;color: white">
+        <button type="reset" id="login" class="alert alert-success" role="alert" data-bs-toggle="tooltip" data-bs-placement="top" style="background-color:white"></button>
+        <marquee width="30%" direction="left" height="50px" style="color: Black; font-family: serif;">
+            Let Your Dreams Take Fly.....
+        </marquee>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

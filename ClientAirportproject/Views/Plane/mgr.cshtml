@@ -1,0 +1,204 @@
+﻿
+
+
+<html>
+
+<head>
+
+    <style>
+
+
+
+        .container {
+          
+            width: 1000px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            gap: 75px;
+        }
+
+            .container .card {
+                position: relative;
+                cursor: pointer;
+            }
+
+                .container .card .face {
+                    width: 300px;
+                    height: 200px;
+                    transition: 0.5s;
+                }
+
+                    .container .card .face.face1 {
+                        position: relative;
+                        background: #333;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1;
+                        transform: translateY(100px);
+                    }
+
+                .container .card:hover .face.face1 {
+                    /* background:orange;*/
+
+                    transform: translateY(0);
+                }
+
+                    /*.container .card .face.face1 .content {
+
+                    opacity: 0.2;
+
+                    transition: 0.5s;
+
+                }*/
+
+                    .container .card:hover .face.face1 .content {
+                        opacity: 1;
+                    }
+
+                .container .card .face.face1 .content img {
+                    max-width: 225px;
+                }
+
+                .container .card .face.face1 .content h3 {
+                    margin: 10px 0 0;
+                    padding: 0;
+                    color: #fff;
+                    text-align: center;
+                    font-size: 1.5em;
+                }
+
+                .container .card .face.face2 {
+                    position: relative;
+                    background: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                    box-sizing: border-box;
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+                    transform: translateY(-100px);
+                }
+
+                .container .card:hover .face.face2 {
+                    transform: translateY(0);
+                }
+
+                .container .card .face.face2 .content p {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .container .card .face.face2 .content a {
+                    margin: 15px 0 0;
+                    display: inline-block;
+                    text-decoration: none;
+                    font-weight: 900;
+                    color: #333;
+                    padding: 5px;
+                    border: 1px solid #333;
+                }
+
+                    .container .card .face.face2 .content a:hover {
+                     
+
+                        color: #fff;
+                    }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container" style="margin-top:206px; left:450px;">
+
+        <div class="card">
+
+            <div class="face face1" style="background: #FF9933">
+
+                <div class="content">
+
+                    <img src="~/Images/Pilot.jpg" />
+
+                    <h3>Add Plane to Pilot</h3>
+
+                </div>
+
+            </div>
+
+            <div class="face face2">
+
+                <div class="content">
+
+                    <p>A pilot is a skilled aviator who operates and navigates aircraft. Pilots are responsible for the safe and efficient transportation of passengers, cargo, or both.</p>
+
+                    <button style="background: #00008b; border-radius: 8px; margin-top: 9px; margin-left: 83px; " onclick="window.location.href='/Pilot/addplane_pilot'"><strong style="color:white;">Continue</strong></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="face face1" style="background: #FFFFFF">
+
+                <div class="content">
+
+                    <img src="~/Images/Hanger.jpg" />
+
+                    <h3 style="color: #000080">Hanger Status</h3>
+
+                </div>
+
+            </div>
+
+            <div class="face face2">
+
+                <div class="content">
+
+                    <p>A hanger is an area where the repairing and servicing of aircraft are performed.It is built in the form of a huge shed utilizing steel trusses and frames.</p>
+
+                    <button style="background: #00008b; border-radius:8px; margin-top:9px; margin-left:83px;" onclick="window.location.href='/Hanger/hangerstatus'"><strong style="color:white;">Continue</strong></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="face face1" style="background: #138808">
+
+                <div class="content">
+
+                    <img src="~/Images/Plane.jpg" />
+
+                    <h3>Add Plane to Hanger</h3>
+
+                </div>
+
+            </div>
+
+            <div class="face face2">
+
+                <div class="content">
+
+                    <p>Plane is a class of fixed-wing aircraft that is heavier than air,and supported by the dynamic reaction of the air against its wings.</p>
+
+                    <button style="background: #00008b; border-radius: 8px; margin-top: 9px; margin-left: 83px; " onclick="window.location.href='/Hanger/addplane_hanger'"><strong style="color:white;">Continue</strong></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
