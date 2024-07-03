@@ -1,0 +1,49 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  azureSubscription: 'rakshitha-azure-subscription' # Replace with your Azure service connection name
+  appName: 'ganeshgondyalaappserviceCiCd' # Replace with your Azure App Service name
+  packagePath: '$(Build.ArtifactStagingDirectory)/drop' # Path where the build artifacts will be stored
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x.x' # Specify the .NET version your project uses
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    nugetConfigPath: 'nuget.config'
+
+- script: |
+    dotnet build $(Build.SourcesDirectory)/ClientAirportproject.sln --configuration $(buildConfiguration)
+  displayName: 'Build Solution'
+
+- script: |
+    dotnet test $(Build.SourcesDirectory)/ClientAirportproject.sln --configuration $(buildConfiguration)
+  displayName: 'Run Tests'
+
+- script: |
+    dotnet publish $(Build.SourcesDirectory)/ClientAirportproject.sln --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish Project'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '$(azureSubscription)'
+    appType: 'webApp'
+    appName: '$(appName)'
+    package: '$(packagePath)'
