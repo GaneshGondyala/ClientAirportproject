@@ -4,46 +4,20 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  buildConfiguration: 'Release'
-  azureSubscription: 'rakshitha-azure-subscription' # Replace with your Azure service connection name
-  appName: 'ganeshgondyalaappserviceCiCd' # Replace with your Azure App Service name
-  packagePath: '$(Build.ArtifactStagingDirectory)/drop' # Path where the build artifacts will be stored
-
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '5.x' # Specify the .NET version your project uses
-
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
-    nugetConfigPath: 'nuget.config'
+    projects: '**/*.csproj'
 
-- script: |
-    dotnet build $(Build.SourcesDirectory)/ClientAirportproject1.sln --configuration $(buildConfiguration)
-  displayName: 'Build Solution'
-
-- script: |
-    dotnet test $(Build.SourcesDirectory)/ClientAirportproject1.sln --configuration $(buildConfiguration)
-  displayName: 'Run Tests'
-
-- script: |
-    dotnet publish $(Build.SourcesDirectory)/ClientAirportproject1.sln --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
-  displayName: 'Publish Project'
-
-- task: PublishBuildArtifacts@1
+- task: DotNetCoreCLI@2
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
 
-- task: AzureWebApp@1
+- task: DotNetCoreCLI@2
   inputs:
-    azureSubscription: '$(azureSubscription)'
-    appType: 'webApp'
-    appName: '$(appName)'
-    package: '$(packagePath)'
+    command: 'test'
+    projects: '**/*Tests.csproj'
+    arguments: '--configuration Release'
